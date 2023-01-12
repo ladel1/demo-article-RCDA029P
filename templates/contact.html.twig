@@ -1,9 +1,15 @@
-{# ceci un commentaire #}
-{% set titre = "Contact" %}
-{% set menu = ["Accueil","Blog","Contact","A propos","Connexion"] %}
+{% extends "base.html.twig" %}
+
+{% block main %}
+    <h1>Contact</h1>
+    <p><span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos non sapiente cum in voluptas iure eveniet corrupti quia facilis tempore, tenetur dolore, sed a maiores modi dolorem, perspiciatis aliquam. Nihil.</span><span>Ad quaerat officia distinctio expedita culpa non excepturi sint odio consequatur nulla temporibus ullam quae, fugiat delectus animi aliquid consectetur quos facilis suscipit architecto beatae aut. Impedit, a rerum. Consequatur?</span><span>Quis et at obcaecati labore consequatur repudiandae temporibus nam tenetur? Reiciendis commodi libero perspiciatis aut molestias necessitatibus, adipisci vel reprehenderit sed aliquid dolorem aperiam ab culpa eius earum totam autem!</span><span>Aut, sunt excepturi ullam nostrum sit obcaecati nisi rem dolorem itaque ipsam, quos blanditiis cupiditate. Ab quaerat placeat nostrum nesciunt dolores repellendus blanditiis sit quam, maxime, doloribus laudantium corrupti sunt?</span><span>Voluptates eos hic corporis quis consequatur temporibus dolor quaerat ipsa, non reiciendis quibusdam totam iste ea quod, fugiat facere? Repellat sapiente minima officia neque explicabo quo, a eius aliquam voluptatum.</span><span>Quibusdam doloribus sequi dolor omnis nihil. Nobis, debitis harum, aliquam labore repellat tempora obcaecati quo perferendis totam temporibus aperiam quos fugit distinctio, ab impedit eius mollitia consequuntur numquam minima itaque?</span><span>Eos minima laudantium reiciendis nisi expedita quis quisquam praesentium voluptas vel, unde ullam saepe quibusdam iusto? Alias ducimus debitis animi corporis, sequi, laborum sint deserunt quam quaerat temporibus exercitationem recusandae!</span><span>Deleniti iusto numquam hic accusamus animi laudantium, commodi non corrupti ut ullam sit voluptates, fuga magni debitis eos magnam sunt quia delectus. Cumque, aperiam iure dolorum corporis ipsa qui sequi?</span><span>Corrupti nostrum provident quos tempore, beatae velit magni? Magnam modi consequatur aperiam ab laborum consectetur sequi rerum perspiciatis, pariatur optio eaque, veritatis odit vitae corporis iure velit vero, fugiat nulla!</span><span>Cum quo delectus animi ullam ea temporibus natus numquam quod magni consectetur tenetur, earum obcaecati et? Sunt, in eligendi ut, porro dicta facere voluptatibus error ad totam velit reprehenderit doloribus.</span></p>    
+{% endblock %}
 
 
-{% include "parts/header.html.twig" %}
+{% block title %}
+Contact
+{% endblock %}
 
-
-{% include "parts/footer.html.twig" %}
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}

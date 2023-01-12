@@ -9,14 +9,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController{
 
     /**
-     * @Route("/")
+     * @Route("/",name="home")
      */
-    function home():Response{     
-       return $this->render("home.html.twig");
+    function home():Response{  
+      $articles = [
+         "Samsung S21",
+         "Iphone 11",
+         "Nokia 3310",
+         "PC Dell I7"
+      ];
+      $prenom = "adel";
+       return $this->render("home.html.twig",compact("articles","prenom"));
     }
 
     /**
-     * @Route("/contact")
+     * @Route("/contact",name="contact")
      */
     function contact():Response{     
         return $this->render("contact.html.twig");

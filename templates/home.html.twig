@@ -1,8 +1,14 @@
-{# ceci un commentaire #}
-{% set titre = "Accueil" %}
-{% set menu = ["Accueil","Blog","Contact","A propos","Connexion"] %}
+{% extends "base.html.twig" %}
 
-{% include "parts/header.html.twig" %}
+{% block main %}
+    <h1>Home</h1>
+    <h2>{{prenom}}</h2>
+    {% for article in articles %}
+        <h5> {{article}} </h5>
+    {% endfor %}    
+{% endblock %}
 
 
-{% include "parts/footer.html.twig" %}
+{% block title %}
+Home
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Article{% endblock %}
+
+{% block main %}
+
+<div class="row mt-5 text-center">
+    <h1>
+        {{ article.title }}
+    </h1>    
+</div>
+
+<div class="row mt-2 text-center">
+
+    {% include "help/_flash.html.twig" %}
+
+    {% if article.image %}
+        <img src="{{ article.image }}"  style="width: 300px; margin: 40px auto" alt="{{ article.title }}">
+    {% endif %}
+    <p>
+        {{article.content}}
+    </p>
+    <p>
+        <small>
+            {{article.author}}
+        </small><br>
+        <small>
+            {{article.datePublished|date("d/m/Y")}}
+        </small>
+    </p>
+</div>
+
+{% endblock %}

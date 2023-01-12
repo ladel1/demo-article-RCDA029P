@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste auteurs{% endblock %}
+
+{% block main %}
+
+<div class="row mt-5 text-center">
+    <h1>
+        Liste Auteurs
+    </h1>    
+</div>
+
+<div class="row mt-5 mb-5 justify-content-center">
+    <div class="card" style="width: 18rem;">
+        <ul class="list-group list-group-flush">
+            {% for item in authors %}                
+                <li class="list-group-item"><a class="btn" href="{{ path('app_article_author', {'name':item["author"]} ) }}">{{item["author"]}}</a></li>
+            {% else %}
+                <li class="list-group-item alert alert-info">Aucun auteur</li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

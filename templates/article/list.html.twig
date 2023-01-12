@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste articles{% endblock %}
+
+{% block main %}
+
+
+<div class="row text-center mt-5">
+    <h1>Liste articles  {{ author is defined ?author:"" }} </h1>
+</div>
+<div class="row mt-4">
+    <div class="col-8 offset-2">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>N°</th>
+                    <th>Titre</th>
+                    <th>Résumé</th>
+                    <th>Date </th>
+                    <th>Auteur</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in articles %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.content[0:40] }}...</td>
+                        <td>{{ item.datePublished|date("d/m/Y H:i") }}</td>
+                        <td>{{ item.author }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            Aucun article disponible
+                        </td>
+                    </tr>        
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
