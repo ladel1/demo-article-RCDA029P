@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
  * @Route("/article", name="app_article_")
@@ -62,6 +63,7 @@ class ArticleController extends AbstractController
         // 4. 
         if($formArticle->isSubmitted()){            
             $this->articleRepository->add($article,true);
+            $this->addFlash("success","L'article a bien été ajouté!");
             return $this->redirectToRoute("app_article_detail",["id"=>$article->getId()]);
         }
         return $this->render("article/add.html.twig",["articleForm"=>$formArticle->createView()]);
@@ -127,9 +129,15 @@ class ArticleController extends AbstractController
     /**
      * @Route("/supprimer",name="delete")
      */
-    public function delete( ){
-        $this->articleRepository->remove($article,true);
-        return $this->redirectToRoute("app_article_list");
+    public function delete(Request $request){        
+        $id = $request->get("id");
+        if($this->isCsrfTokenValid("delete-".$id,$request->get("token"))){
+            $this->articleRepository->remove($this->articleRepository->find($id),true);
+            $this->addFlash("success","L'article a bien été supprimé!");
+            return $this->redirectToRoute("app_article_list");
+        }
+        $this->addFlash("danger","Erreur dans CSRF Token");
+        return $this->redirectToRoute("app_article_detail",["id"=>$id]);
     }
 
 
