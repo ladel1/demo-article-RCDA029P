@@ -113,7 +113,7 @@ class ArticleController extends AbstractController
         $articleForm = $this->createForm(ArticleType::class,$article);
         $articleForm->handleRequest($request);
 
-        if($articleForm->isSubmitted()){
+        if($articleForm->isSubmitted() && $articleForm->isValid() ){
             $this->articleRepository->update();
             $this->addFlash("success","L'article a bien été modifié!");
             return $this->redirectToRoute("app_article_detail",["id"=>$article->getId()]);
@@ -121,6 +121,15 @@ class ArticleController extends AbstractController
 
         return $this->render("article/update.html.twig",
         ["articleForm"=>$articleForm->createView()]);
+    }
+
+
+    /**
+     * @Route("/supprimer",name="delete")
+     */
+    public function delete( ){
+        $this->articleRepository->remove($article,true);
+        return $this->redirectToRoute("app_article_list");
     }
 
 

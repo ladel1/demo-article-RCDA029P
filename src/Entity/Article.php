@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -20,16 +21,31 @@ class Article
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner un titre")
+     * @Assert\Length(
+     *  min=5,
+     *  max=255,
+     *  maxMessage="Trop long ! Maximum {{ limit }} caractères",
+     *  minMessage="Trop court ! Au moins {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner le contenu")
      * @ORM\Column(type="text")
      */
     private $content;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner un auteur")
+     * @Assert\Length(
+     *  min=1,
+     *  max=50,
+     *  maxMessage="Trop long ! Maximum {{ limit }} caractères",
+     *  minMessage="Trop court ! Au moins {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=50)
      */
     private $author;
@@ -52,7 +68,7 @@ class Article
 
 
     public function __construct()
-    {
+    {        
         $this->setDatePublished(new DateTime());
         $this->setIsPublished(true);
     }

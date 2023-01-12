@@ -28,6 +28,12 @@
             {{article.datePublished|date("d/m/Y")}}
         </small>
     </p>
+    <form action="{{ path("app_article_delete") }}" method="post">
+
+        <input type="hidden" name="">
+        <input type="hidden" name="id" value="{{ article.id }}">
+        <button class="btn btn-danger" type="submit" >Supprimer</button>
+    </form>
 </div>
 
 {% endblock %}
