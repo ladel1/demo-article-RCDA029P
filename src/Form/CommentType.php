@@ -14,8 +14,7 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('author',null,["label"=>"Auteur"])
-            ->add('content',null,["label"=>"Contenu"])
-            ->add("article",HiddenType::class)
+            ->add('content',null,["label"=>"Contenu"])  
             
         ;
     }

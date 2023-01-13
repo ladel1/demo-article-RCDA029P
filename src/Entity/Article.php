@@ -68,7 +68,7 @@ class Article
     private $isPublished;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="article",fetch="EAGER", orphanRemoval=true)
      */
     private $comments;
 

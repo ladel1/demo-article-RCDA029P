@@ -41,4 +41,13 @@
     {{ include('comment/_form.html.twig') }}
 </div>
 
+<div class="row mt-5">
+    <h3>Commentaires: </h3>
+    {% for comment in article.comments %}
+        <h6>{{ comment.content }}</h6>
+        <small>{{ comment.author }}</small>
+        <hr>
+    {% endfor %}
+</div>
+
 {% endblock %}

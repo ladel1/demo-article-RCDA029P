@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
@@ -27,22 +28,19 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_comment_new", methods={"GET", "POST"})
+     * @Route("/new/{id}", name="app_comment_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CommentRepository $commentRepository, ArticleRepository $articleRepository): Response
+    public function new(Request $request, CommentRepository $commentRepository,Article $article): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
-        $commentTemp = $request->get("comment");
-        $commentTemp["article"] = $articleRepository->find($commentTemp["article"]);
-        $request->request->set("comment",$commentTemp);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $comment->setArticle($article);
             $commentRepository->add($comment, true);
 
-            return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_detail', ["id"=>$article->getId()]);
         }        
     }
 
