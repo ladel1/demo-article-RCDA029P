@@ -1,0 +1,8 @@
+{{ form_start(form,{"action":path("app_comment_new")}) }}
+    {{ form_row(form.author) }}
+    {{ form_row(form.content) }}
+    {# form.article.vars["value"].id #}
+    <input type="hidden" name="{{ field_name(form.article) }}" value="{{ field_value(form.article).id }}" >
+
+    <button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+{{ form_end(form) }}

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,8 +95,15 @@ class ArticleController extends AbstractController
     /**
      * @Route("/{id}",name="detail",requirements={"id":"\d+"})
      */
-    public function detail(Article $article){        
-        return $this->render("/article/detail.html.twig",["article"=> $article ]);
+    public function detail(Article $article){    
+        // form comment
+        $comment = new Comment();
+        $comment->setArticle($article);
+        $formComment = $this->createForm(CommentType::class, $comment);
+        return $this->render("/article/detail.html.twig",
+        ["article"=> $article,
+         'form' => $formComment->createView(), 
+    ]);
     }
     
     /**
