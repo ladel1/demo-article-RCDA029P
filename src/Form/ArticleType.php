@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,7 +20,14 @@ class ArticleType extends AbstractType
         $builder
             ->add('title',TextType::class,["label"=>"Titre"])
             ->add('content',TextareaType::class,["label"=>"Contenu"])
-            ->add('author',TextType::class,["label"=>"Auteur"])
+            ->add('categories',EntityType::class,[
+                "label"=>"Catégories",
+                "class"=>Category::class,
+                "choice_label"=>"name",
+                "multiple"=>true,
+                
+            ])
+    
             ->add('image',UrlType::class,["label"=>"Image (URL)"])  
                     
         ;

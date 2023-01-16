@@ -22,7 +22,7 @@
     </p>
     <p>
         <small>
-            {{article.author}}
+            {{article.author.username}}
         </small><br>
         <small>
             {{article.datePublished|date("d/m/Y")}}
@@ -31,21 +31,30 @@
     <form action="{{ path("app_article_delete") }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet article ?')">
         <input type="hidden" name="token" value="{{ csrf_token('delete-'~article.id) }}" >
         <input type="hidden" name="id" value="{{ article.id }}">
-        <button class="btn btn-danger" type="submit" >Supprimer</button>
+        {% if is_granted('ROLE_USER') and app.user.id == article.author.id %}                
+            <button class="btn btn-danger" type="submit" >Supprimer</button>
+        {% endif %}
     </form>
 </div>
 
 <div class="row mt-5">
     <h3>Ajouter un commentaire</h3>
     <br>
-    {{ include('comment/_form.html.twig') }}
+    {% if is_granted('ROLE_USER') %}
+        {{ include('comment/_form.html.twig') }}
+    {% else %}        
+        <div class="alert alert-info">
+            Pour écrire un commentaire connecte toi !
+        </div>    
+    {% endif %}
+    
 </div>
 
 <div class="row mt-5">
     <h3>Commentaires: </h3>
     {% for comment in article.comments %}
         <h6>{{ comment.content }}</h6>
-        <small>{{ comment.author }}</small>
+
         <hr>
     {% endfor %}
 </div>

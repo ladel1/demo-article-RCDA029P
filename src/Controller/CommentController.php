@@ -7,6 +7,7 @@ use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,15 +29,18 @@ class CommentController extends AbstractController
     }
 
     /**
+     * 
      * @Route("/new/{id}", name="app_comment_new", methods={"GET", "POST"})
      */
     public function new(Request $request, CommentRepository $commentRepository,Article $article): Response
     {
+        
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($this->getUser());
             $comment->setArticle($article);
             $commentRepository->add($comment, true);
 

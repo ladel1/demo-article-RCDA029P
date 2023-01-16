@@ -6,7 +6,7 @@
 
 
 <div class="row text-center mt-5">
-    <h1>Liste articles  {{ author is defined ?author:"" }} </h1>
+    <h1>Mes articles  {{ author is defined ?author:"" }} </h1>
 </div>
 <div class="row mt-4">
     <div class="col-8 offset-2">
@@ -18,7 +18,9 @@
                     <th>Titre</th>
                     <th>Résumé</th>
                     <th>Date </th>
-                    <th>Auteur</th>                    
+                    <th>Auteur</th>
+                    <th>Actions</th>
+                                      
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +30,12 @@
                         <td>{{ item.title }}</td>
                         <td>{{ item.content[0:40] }}...</td>
                         <td>{{ item.datePublished|date("d/m/Y H:i") }}</td>
-                        <td>{{ item.author }}</td>
+                        <td> {{  item.author.profil ? item.author.profil.firstname ~" "~item.author.profil.lastname  : item.author.username    }} </td>
+                        <td> 
+                            <a class="btn btn-info" href="{{ path('app_article_detail',{id:item.id}) }}"><i class="fa-solid fa-eye"></i></a>
+
+                            <a class="btn btn-success" href="{{ path('app_article_edit',{id:item.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>    
+                        </td>
                     </tr>
                 {% else %}
                     <tr>

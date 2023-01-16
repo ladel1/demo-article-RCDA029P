@@ -40,17 +40,6 @@ class Article
      */
     private $content;
 
-    /**
-     * @Assert\NotBlank(message="Veuillez renseigner un auteur")
-     * @Assert\Length(
-     *  min=1,
-     *  max=50,
-     *  maxMessage="Trop long ! Maximum {{ limit }} caractères",
-     *  minMessage="Trop court ! Au moins {{ limit }} caractères"
-     * )
-     * @ORM\Column(type="string", length=50)
-     */
-    private $author;
 
     /**
      * @ORM\Column(type="datetime",options={"default"="CURRENT_TIMESTAMP"})
@@ -72,6 +61,17 @@ class Article
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="articles")
+     */
+    private $categories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
 
 
     public function __construct()
@@ -79,6 +79,7 @@ class Article
         $this->setDatePublished(new DateTime());
         $this->setIsPublished(true);
         $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,18 +107,6 @@ class Article
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }
@@ -184,6 +173,42 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

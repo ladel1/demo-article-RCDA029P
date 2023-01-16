@@ -9,13 +9,18 @@ use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException as ExceptionAccessDeniedException;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 
 /**
+ * 
  * @Route("/article", name="app_article_")
  */
 class ArticleController extends AbstractController
@@ -36,7 +41,7 @@ class ArticleController extends AbstractController
 
 
         return $this->render('article/list.html.twig', [
-           "articles"=> $this->articleRepository->findBy(["isPublished"=>true])
+           "articles"=> $this->articleRepository->findBy(["isPublished"=>true,"author"=>$this->getUser()])
         ]);
     }
 
@@ -51,10 +56,16 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * 
      * @Route("/ajouter", name="add")
      */
     public function add(Request $request): Response
     {
+     
+
+        // if(!$this->isGranted("ROLE_USER")){
+        //     return $this->redirectToRoute("app_login");
+        // }
         // Afficher formulaire
         // création de l'instance article
         $article = new Article();
@@ -63,7 +74,9 @@ class ArticleController extends AbstractController
         // 3. gérer la requette
         $formArticle->handleRequest($request);
         // 4. 
-        if($formArticle->isSubmitted()){            
+        if($formArticle->isSubmitted()){ 
+            // set connected user
+            $article->setAuthor($this->getUser());           
             $this->articleRepository->add($article,true);
             $this->addFlash("success","L'article a bien été ajouté!");
             return $this->redirectToRoute("app_article_detail",["id"=>$article->getId()]);
@@ -121,6 +134,9 @@ class ArticleController extends AbstractController
      * @Route("/modifier/{id}",name="edit",requirements={"id":"\d+"})
      */
     public function edit(Article $article,Request $request){
+        if($article->getAuthor()->getId() !== $this->getUser()->getId()){
+            throw new ExceptionAccessDeniedException("");
+        }
         $articleForm = $this->createForm(ArticleType::class,$article);
         $articleForm->handleRequest($request);
 
