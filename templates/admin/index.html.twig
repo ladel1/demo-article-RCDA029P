@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription Admin{% endblock %}
+
+{% block main %}
+<div class="row mt-5">
+    <div class="col-8 offset-2">
+        <h1>Inscription</h1>
+
+        {{ form_start(form) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.roles) }}
+            {{ form_row(form.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(form.agreeTerms) }}
+    
+            <button type="submit" class="btn btn-primary">Inscription</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

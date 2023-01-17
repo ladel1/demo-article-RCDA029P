@@ -5,11 +5,12 @@ namespace App\Form;
 use App\Entity\Profil;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserProfilType extends AbstractType
-{
+{ 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -19,6 +20,7 @@ class UserProfilType extends AbstractType
         ->add('profil',ProfilType::class,[
             'data_class'=>Profil::class
         ])
+        ->add("ajouter",SubmitType::class)
         ;
     }
 
