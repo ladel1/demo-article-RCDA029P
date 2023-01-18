@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Service\Operation;
+use App\Service\Mailer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,8 +12,8 @@ class MainController extends AbstractController{
     /**
      * @Route("/",name="home")
      */
-    function home(Operation $op):Response{  
-      dump($op->add(15,5));
+    function home(Mailer $mailer):Response{  
+      $mailer->send("support@eni.fr","adel@eni.fr","test1","balbalablabalabal");
       $articles = [
          "Samsung S21",
          "Iphone 11",
